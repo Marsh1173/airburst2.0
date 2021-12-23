@@ -49,9 +49,23 @@
         const heapTotal = document.getElementById('heapTotal');
         const heapUsed = document.getElementById('heapUsed');
         const external = document.getElementById('external');
-        const wss = new WebSocket(`wss://${location.host}`);
 
+        /*const ws = new WebSocket(`ws://${location.host}:3000`);
+        ws.onmessage = function(event) {
+          const data = JSON.parse(event.data);
+
+          rss.textContent = data.rss;
+          heapTotal.textContent = data.heapTotal;
+          heapUsed.textContent = data.heapUsed;
+          external.textContent = data.external;
+        };
         
+        ws.onerror = (error) => {
+          console.log("WS error")
+          console.log(error)
+        }*/
+        
+        const wss = new WebSocket(`wss://${location.host}:3000`);
         wss.onmessage = function(event) {
           const data = JSON.parse(event.data);
 

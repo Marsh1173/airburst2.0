@@ -10,10 +10,10 @@ const app: Application = express();
 app.use(express.static(path.join(__dirname, "../../public")));
 
 const server = createServer(
-    /*{
+    {
         cert: fs.readFileSync("/etc/letsencrypt/live/server.natehroylance.com/cert.pem"),
         key: fs.readFileSync("/etc/letsencrypt/live/server.natehroylance.com/privkey.pem"),
-    },*/
+    },
     app,
 );
 const wss = new WebSocket.Server({ server });

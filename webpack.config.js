@@ -1,7 +1,7 @@
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 
-const contentBase = path.join(__dirname, "public");
+const contentBase = path.join(__dirname, "./public");
 
 module.exports = {
     entry: "./src/ts/main.tsx",
@@ -17,6 +17,29 @@ module.exports = {
                 test: /\.tsx?$/,
                 use: "ts-loader",
                 exclude: /node_modules/,
+            },
+            {
+                test: /\.less$/i,
+                use: [
+                    {
+                        loader: "style-loader",
+                    },
+                    {
+                        loader: "css-loader",
+                    },
+                    {
+                        loader: "less-loader",
+                    },
+                ],
+            },
+            {
+                test: /\.m?js$/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: ["@babel/preset-env"],
+                    },
+                },
             },
         ],
     },
@@ -37,6 +60,6 @@ module.exports = {
         path: contentBase,
     },
     resolve: {
-        extensions: [".tsx", ".ts", ".js"],
+        extensions: [".tsx", ".ts", ".js", ".less", ".css"],
     },
 };

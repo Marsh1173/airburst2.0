@@ -4,10 +4,83 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet/less" type="text/css" href="less/main.less" />
         <script src="//cdn.jsdelivr.net/npm/less@3.13"></script>
-        <title>Generic Interface</title>
+        <title>Airburst Xtreme</title>
+        <style>
+          table, td {
+            border: 1px solid #333;
+          }
+    
+          thead {
+            background-color: #333;
+            color: #fff;
+          }
+        </style>
     </head>
     <body>
-        <div id="reactDom">React is not working</div>
+        <h1>Server stats</h1>
+    <table>
+      <thead>
+        <tr>
+          <th colspan="2">Memory usage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>RSS</td>
+          <td id="rss"></td>
+        </tr>
+        <tr>
+          <td>Heap total</td>
+          <td id="heapTotal"></td>
+        </tr>
+        <tr>
+          <td>Heap used</td>
+          <td id="heapUsed"></td>
+        </tr>
+        <tr>
+          <td>External</td>
+          <td id="external"></td>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+      (function() {
+        const rss = document.getElementById('rss');
+        const heapTotal = document.getElementById('heapTotal');
+        const heapUsed = document.getElementById('heapUsed');
+        const external = document.getElementById('external');
+        const ws = new WebSocket(`ws://${location.host}`);
+        const wss = new WebSocket(`wss://${location.host}`);
+
+        ws.onmessage = function(event) {
+          const data = JSON.parse(event.data);
+
+          rss.textContent = data.rss;
+          heapTotal.textContent = data.heapTotal;
+          heapUsed.textContent = data.heapUsed;
+          external.textContent = data.external;
+        };
+        
+        ws.onerror = (error) => {
+          console.log("WS error")
+          console.log(error)
+        }
+        
+        wss.onmessage = function(event) {
+          const data = JSON.parse(event.data);
+
+          rss.textContent = data.rss;
+          heapTotal.textContent = data.heapTotal;
+          heapUsed.textContent = data.heapUsed;
+          external.textContent = data.external;
+        };
+        
+        wss.onerror = (error) => {
+          console.log("WSS error")
+          console.log(error)
+        }
+      })();
+    </script>
         <script src="bundle.js"></script>
     </body>
 </html>

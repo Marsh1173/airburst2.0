@@ -7,5 +7,5 @@ class MainDiv extends Component<{}, {}> {
     }
 }
 
-const domContainer = document.querySelector("#reactDom");
-ReactDOM.render(createElement(MainDiv), domContainer);
+//const domContainer = document.querySelector("#reactDom");
+//ReactDOM.render(createElement(MainDiv), domContainer);

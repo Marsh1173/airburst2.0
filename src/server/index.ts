@@ -1,12 +1,21 @@
 const express = require("express");
 import { WebSocket } from "ws";
-import { createServer } from "http";
 import * as path from "path";
+import { Application } from "express-ws";
 
-const app = express();
+import { createServer } from "https";
+import * as fs from "fs";
+
+const app: Application = express();
 app.use(express.static(path.join(__dirname, "../../public")));
 
-const server = createServer(app);
+const server = createServer(
+    /*{
+        cert: fs.readFileSync("/etc/letsencrypt/live/server.natehroylance.com/cert.pem"),
+        key: fs.readFileSync("/etc/letsencrypt/live/server.natehroylance.com/privkey.pem"),
+    },*/
+    app,
+);
 const wss = new WebSocket.Server({ server });
 
 wss.on("connection", function (ws) {

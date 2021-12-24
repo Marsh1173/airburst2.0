@@ -11,7 +11,7 @@ class MainDiv extends Component<{}, {}> {
     }
 }
 
-Global.serverInfo.url = `wss://${location.host}`;
+Global.serverInfo.url = `wss://${location.host}:3000`;
 class MessagePrinter implements MessageHandlerInterface {
     receiveMessage(data: ClientConnectMessage) {
         console.log(data);

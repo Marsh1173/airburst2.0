@@ -31,8 +31,8 @@
         "ws": "^8.4.0"
     },
     "scripts": {
-        "watch": "yarn && npx webpack --watch",
-        "build": "npx webpack",
+        "watch": "yarn && npx webpack --watch --config webpack.config.js",
+        "build": "npx webpack --config prod.config.js",
         "prod-server": "ts-node-dev ./src/server/index.ts",
         "dev-server": "ts-node-dev ./src/server/index.ts dev"
     }

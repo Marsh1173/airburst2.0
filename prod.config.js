@@ -2,8 +2,8 @@ const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 
 const contentBase = path.join(__dirname, "./public");
-//var entry = "./src/client/remoteMain.tsx";
-var entry = "./src/client/localMain.tsx";
+var entry = "./src/client/remoteMain.tsx";
+// entry = "./src/client/localMain.tsx";
 
 module.exports = {
     entry,

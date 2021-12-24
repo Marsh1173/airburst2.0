@@ -1,13 +1,43 @@
-export type ClientMessage = ClientConnectMessage;
+import { PlayerInfo } from "./PlayerInfo";
+import { LobbyInfo } from "./LobbyInfo";
 
-export interface ClientConnectMessage {
-    type: "ClientConnectMessage";
-    msg: string;
+export interface ClientMessage {
+    msg: ClientBrowserMessage;
+    clientId: number;
 }
 
-export type ServerMessage = ServerErrorMessage;
+export interface ClientBrowserMessage {
+    type: "ClientBrowserMessage";
+    msg: ClientRequestLobbies | ClientEnterGame | ClientCreateGame;
+}
+
+export interface ClientRequestLobbies {
+    type: "ClientRequestLobbies";
+}
+
+export interface ClientEnterGame {
+    type: "ClientEnterGame";
+    clientInfo: PlayerInfo;
+}
+
+export interface ClientCreateGame {
+    type: "ClientCreateGame";
+    gameName: string;
+    clientInfo: PlayerInfo;
+}
+
+export type ServerMessage = ServerErrorMessage | ServerBrowserMessage;
 
 export interface ServerErrorMessage {
     type: "ServerErrorMessage";
     msg: string;
+}
+export interface ServerBrowserMessage {
+    type: "ServerBrowserMessage";
+    msg: ServerLobbiesResponse;
+}
+export interface ServerLobbiesResponse {
+    type: "ServerLobbiesResponse";
+    lobbies: LobbyInfo[];
+    clientId: number;
 }

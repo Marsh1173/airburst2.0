@@ -1,22 +1,15 @@
 import React, { Component, createElement } from "react";
 import ReactDOM from "react-dom";
-import { ClientConnectMessage } from "../model/api/messages";
-import { MessageHandlerInterface } from "./serverHandling/MessageHandlerInterface";
-import { ServerTalker } from "./serverHandling/ServerTalker";
+import { Home } from "./view-react/Home";
 
 class MainDiv extends Component<{}, {}> {
     render() {
-        return <p>hi</p>;
+        return <Home></Home>;
     }
 }
-class MessagePrinter implements MessageHandlerInterface {
-    receiveMessage(data: ClientConnectMessage) {
-        console.log(data);
-    }
-}
-
-let serverTalker: ServerTalker = new ServerTalker(new MessagePrinter());
-serverTalker.connect();
 
 const domContainer = document.querySelector("#reactDom");
+// setTimeout(() => {
+//     ReactDOM.render(createElement(MainDiv), domContainer);
+// }, 1000);
 ReactDOM.render(createElement(MainDiv), domContainer);

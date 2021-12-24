@@ -1,0 +1,34 @@
+.BrowserScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .lobbies {
+        .LobbyComponent {
+            width: 30rem;
+            padding: 1rem;
+            margin: 1rem;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .title {
+                font-size: 1.3rem;
+            }
+
+            .playerCount {
+                color: rgba(255, 255, 255, 0.377);
+                font-size: 0.8rem;
+            }
+        }
+        border-left: @lobbyBorder;
+        border-right: @lobbyBorder;
+        border-radius: 0.5rem;
+        padding: 1rem;
+    }
+    .SpecialButton {
+        margin-top: 2rem;
+    }
+}
+
+@lobbyBorder: 2px solid rgba(255, 255, 255, 0.2);

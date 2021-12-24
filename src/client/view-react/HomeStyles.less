@@ -1,0 +1,94 @@
+.bordered {
+    border-radius: 0.8rem;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    background: rgba(0, 0, 0, 0.137);
+}
+.bordered.hoverable,
+.bordered.clickable {
+    will-change: border, border-radius, transform;
+    transition: all 0.07s ease-out;
+}
+.bordered.hoverable:hover,
+.bordered.clickable:hover {
+    border-radius: 0.2rem;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    transform: scale(1.02);
+}
+.bordered.clickable:active {
+    transform: scale(0.99);
+}
+
+.fade-in {
+    -webkit-animation: @fadeInAnimation;
+    -moz-animation: @fadeInAnimation;
+    -o-animation: @fadeInAnimation;
+    animation: @fadeInAnimation;
+}
+@fadeInAnimation: fadeInFromNone 0.3s ease-out;
+@-webkit-keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: flex;
+        opacity: 0;
+    }
+
+    100% {
+        display: flex;
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: flex;
+        opacity: 0;
+    }
+
+    100% {
+        display: flex;
+        opacity: 1;
+    }
+}
+
+@-o-keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: flex;
+        opacity: 0;
+    }
+
+    100% {
+        display: flex;
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: flex;
+        opacity: 0;
+    }
+
+    100% {
+        display: flex;
+        opacity: 1;
+    }
+}

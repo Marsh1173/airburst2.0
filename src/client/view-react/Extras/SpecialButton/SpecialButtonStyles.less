@@ -1,0 +1,154 @@
+.SpecialButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .mainButton {
+        width: @plateRingSize;
+        height: @plateRingSize;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .rings {
+            position: absolute;
+            -webkit-animation: spin 12s linear infinite;
+            -moz-animation: spin 12s linear infinite;
+            animation: spin 12s linear infinite;
+            .plateRing {
+                position: absolute;
+                transform: translate(calc(-@plateRingSize / 2), calc(-@plateRingSize / 2));
+
+                img {
+                    width: @plateRingSize;
+                    height: @plateRingSize;
+
+                    -webkit-filter: drop-shadow(0px 0px 3px #222);
+                    filter: drop-shadow(0px 0px 3px #222);
+                }
+
+                pointer-events: none;
+            }
+            .innerRing {
+                position: absolute;
+                transform: translate(calc((@innerRingSize / -2) - 0.25rem), calc((@innerRingSize / -2) - 0.25rem));
+
+                width: calc(@innerRingSize - @innerRingBorder);
+                height: calc(@innerRingSize - @innerRingBorder);
+                border: @innerRingBorder solid rgb(0, 217, 224);
+                border-radius: @innerRingSize;
+
+                -webkit-filter: drop-shadow(0px 0px 1px rgb(0, 255, 255));
+                filter: drop-shadow(0px 0px 1px rgb(0, 255, 255));
+
+                will-change: border;
+                transition: all 0.1s;
+                transition-timing-function: ease-in-out;
+            }
+        }
+
+        will-change: transform;
+        transition: all 0.07s;
+        transition-timing-function: ease-in;
+        .label {
+            position: absolute;
+            p {
+                text-align: center;
+                font-size: 1.25rem;
+            }
+        }
+    }
+    .mainButton:hover {
+        transform: scale(1.07);
+
+        .innerRing {
+            border: @innerRingBorder solid rgb(172, 252, 255);
+        }
+    }
+    .mainButton:active {
+        transform: scale(1);
+    }
+}
+
+@plateRingSize: 9rem;
+@innerRingSize: 5.5rem;
+@innerRingBorder: 0.5rem;
+
+@-moz-keyframes spin {
+    100% {
+        -moz-transform: rotate(360deg);
+    }
+}
+@-webkit-keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+@keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+.shrink-in {
+    -webkit-animation: @shrinkInAnimation;
+    -moz-animation: @shrinkInAnimation;
+    -o-animation: @shrinkInAnimation;
+    animation: @shrinkInAnimation;
+}
+@shrinkInAnimation: shrinkInFromNone 0.3s ease-out;
+@-webkit-keyframes shrinkInFromNone {
+    0% {
+        display: flex;
+        opacity: 0;
+        transform: scale(1.3);
+    }
+
+    100% {
+        display: flex;
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@-moz-keyframes shrinkInFromNone {
+    0% {
+        display: flex;
+        opacity: 0;
+        transform: scale(1.3);
+    }
+
+    100% {
+        display: flex;
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@-o-keyframes shrinkInFromNone {
+    0% {
+        display: flex;
+        opacity: 0;
+        transform: scale(1.3);
+    }
+
+    100% {
+        display: flex;
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes shrinkInFromNone {
+    0% {
+        display: flex;
+        opacity: 0;
+        transform: scale(1.3);
+    }
+
+    100% {
+        display: flex;
+        opacity: 1;
+        transform: scale(1);
+    }
+}

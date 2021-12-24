@@ -1,0 +1,33 @@
+.MessageComponent {
+    background-color: rgb(219, 48, 48);
+    color: white;
+    text-align: center;
+
+    padding: 0.7rem;
+    border: 3px solid rgba(255, 255, 255, 0);
+    border-radius: 1rem;
+
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    opacity: 1;
+    will-change: opacity, border;
+    transition: opacity 0.2s, border 0.1s;
+
+    max-width: 20rem;
+}
+.MessageComponent.good {
+    background-color: rgb(44, 170, 50);
+}
+.MessageComponent.neutral {
+    background-color: rgb(102, 102, 102);
+}
+.MessageComponent.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+.MessageComponent.notHidden:hover {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+}

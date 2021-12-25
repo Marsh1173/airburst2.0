@@ -11,6 +11,12 @@ function getRandColor(): string {
     let g: string = Math.floor(Math.random() * 2) == 0 ? "00" : "ff";
     let b: string = Math.floor(Math.random() * 2) == 0 ? "00" : "ff";
 
+    if (r == "00" && g == "00" && b == "00") {
+        b = "ff";
+    } else if (r == "ff" && g == "ff" && b == "ff") {
+        r = "00";
+    }
+
     return "#" + r + g + b;
 }
 

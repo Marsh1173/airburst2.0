@@ -7,6 +7,7 @@ import { ConnectionFailedScreen } from "./MainMenu/Connecting/ConnectionFailedSc
 import { MessageComponent } from "./Extras/MessageComponent/MessageComponent";
 import { LoginScreen } from "./MainMenu/Login/LoginScreen";
 import "./HomeStyles.less";
+import { LobbyScreen } from "./MainMenu/Lobby/LobbyScreen";
 
 export class Home extends Component<{}, HomeState> {
     private msgRef: React.RefObject<MessageComponent> = React.createRef();
@@ -23,6 +24,7 @@ export class Home extends Component<{}, HomeState> {
                 {this.state.currentPage == "connectionFailed" && <ConnectionFailedScreen></ConnectionFailedScreen>}
                 {this.state.currentPage == "login" && <LoginScreen></LoginScreen>}
                 {this.state.currentPage == "browser" && <BrowserScreen></BrowserScreen>}
+                {this.state.currentPage == "lobby" && <LobbyScreen></LobbyScreen>}
                 <MessageComponent ref={this.msgRef}></MessageComponent>
             </div>
         );
@@ -32,13 +34,11 @@ export class Home extends Component<{}, HomeState> {
         HomePresenter.changeHomeScreen = (newScreenName: string) => {
             this.setState({ currentPage: newScreenName });
         };
-        HomePresenter.showMessage = (msg: string, type: "good" | "bad" | "neutral") => {
+        HomePresenter.showMessage = (msg: string, type: "good" | "bad" | "neutral", seconds: number = 4) => {
             if (this.msgRef.current) {
-                this.msgRef.current.setState({ msg, type, ifHidden: false });
+                this.msgRef.current.setState({ msg, type, ifHidden: false, time: seconds * 1000 });
             }
         };
-
-        HomePresenter.showMessage("Testing....", "neutral");
     }
 
     componentWillUnmount() {

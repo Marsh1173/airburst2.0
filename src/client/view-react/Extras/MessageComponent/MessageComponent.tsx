@@ -6,6 +6,7 @@ interface MessageComponentState {
     msg: string;
     type: "good" | "bad" | "neutral";
     ifHidden: boolean;
+    time: number;
 }
 
 export class MessageComponent extends Component<{}, MessageComponentState> {
@@ -14,7 +15,7 @@ export class MessageComponent extends Component<{}, MessageComponentState> {
     constructor(props: any) {
         super(props);
 
-        this.state = { msg: "", ifHidden: true, type: "neutral" };
+        this.state = { msg: "", ifHidden: true, type: "neutral", time: 4000 };
     }
 
     render() {
@@ -48,7 +49,7 @@ export class MessageComponent extends Component<{}, MessageComponentState> {
             this.timeout = window.setTimeout(() => {
                 this.timeout = undefined;
                 this.setState({ ifHidden: true });
-            }, 4000);
+            }, this.state.time);
         }
     }
 }

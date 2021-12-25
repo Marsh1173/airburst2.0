@@ -1,0 +1,42 @@
+.LobbyScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .players {
+        .PlayerNameComponent {
+            width: 15rem;
+            padding: 0.4rem;
+            margin: 0.5rem;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .title {
+                font-size: 1rem;
+            }
+
+            .colorDiv {
+                width: @colorDivSize;
+                height: @colorDivSize;
+                border: none;
+                border-radius: @colorDivSize;
+            }
+        }
+        border-left: @playersBorder;
+        border-right: @playersBorder;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+    }
+    .leaveBtn {
+        padding: 0.3rem;
+        margin: 0.5rem;
+        font-size: 1.2rem;
+    }
+    .SpecialButton {
+        margin-top: 2rem;
+    }
+}
+
+@playersBorder: 2px solid rgba(0, 0, 0, 0.3);
+@colorDivSize: 1rem;

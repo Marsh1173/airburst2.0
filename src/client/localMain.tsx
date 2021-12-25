@@ -1,5 +1,6 @@
 import React, { Component, createElement } from "react";
 import ReactDOM from "react-dom";
+import { LocalStorageHandler } from "./dataAccessors/LocalStorageHandler";
 import { Home } from "./view-react/Home";
 
 class MainDiv extends Component<{}, {}> {
@@ -7,6 +8,8 @@ class MainDiv extends Component<{}, {}> {
         return <Home></Home>;
     }
 }
+
+LocalStorageHandler.initLocalStorage();
 
 const domContainer = document.querySelector("#reactDom");
 // setTimeout(() => {

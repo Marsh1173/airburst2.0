@@ -1,6 +1,7 @@
 import React, { Component, createElement } from "react";
 import ReactDOM from "react-dom";
 import { Global } from "./dataAccessors/GlobalInfo";
+import { LocalStorageHandler } from "./dataAccessors/LocalStorageHandler";
 import { Home } from "./view-react/Home";
 
 class MainDiv extends Component<{}, {}> {
@@ -9,6 +10,7 @@ class MainDiv extends Component<{}, {}> {
     }
 }
 
+LocalStorageHandler.initLocalStorage();
 Global.serverInfo.url = `wss://${location.host}:3000`;
 
 const domContainer = document.querySelector("#reactDom");

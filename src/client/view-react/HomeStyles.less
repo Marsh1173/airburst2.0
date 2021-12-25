@@ -1,20 +1,26 @@
 .bordered {
-    border-radius: 0.8rem;
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.17);
+    border-radius: 0.5rem;
+}
+.bordered,
+.hoverable,
+.clickable {
     background: rgba(0, 0, 0, 0.137);
 }
-.bordered.hoverable,
-.bordered.clickable {
+.hoverable,
+.clickable {
+    border-radius: 0.8rem;
+    border: 2px solid rgba(255, 255, 255, 0.5);
     will-change: border, border-radius, transform;
     transition: all 0.07s ease-out;
 }
-.bordered.hoverable:hover,
-.bordered.clickable:hover {
+.hoverable:hover,
+.clickable:hover {
     border-radius: 0.2rem;
     border: 2px solid rgba(255, 255, 255, 0.9);
     transform: scale(1.02);
 }
-.bordered.clickable:active {
+.clickable:active {
     transform: scale(0.99);
 }
 

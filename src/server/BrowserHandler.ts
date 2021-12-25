@@ -8,28 +8,60 @@ export class BrowserHandler {
 
     constructor(private readonly server: ServerClass) {}
 
-    public sendLobbyList(client: WebSocketClient) {
-        let lobbies: LobbyInfo[] = [
-            { name: "Test Lobby", id: getNextId(), players: [] },
-            { name: "Test Lobby", id: getNextId(), players: [] },
-            { name: "Test Lobby", id: getNextId(), players: [] },
-            { name: "Test Lobby", id: getNextId(), players: [] },
-            { name: "Test Lobby", id: getNextId(), players: [] },
-            {
-                name: "Test Lobby 2",
-                id: getNextId(),
-                players: [
-                    { color: "", id: 0, name: "" },
-                    { color: "", id: 0, name: "" },
-                ],
-            },
-        ];
-
-        // let lobbies: LobbyInfo[] = [];
+    public sendLobbyListToClient(client: WebSocketClient) {
+        let lobbies: LobbyInfo[] = [];
         this.lobbyMap.forEach((lobby) => {
             lobbies.push(lobby);
         });
 
         client.send({ type: "ServerBrowserMessage", msg: { type: "ServerLobbiesResponse", clientId: client.playerInfo.id, lobbies } });
+    }
+
+    public sendLobbyListToAllClients() {
+        let lobbies: LobbyInfo[] = [];
+        this.lobbyMap.forEach((lobby) => {
+            lobbies.push(lobby);
+        });
+
+        this.server.clientMap.forEach((client) => {
+            client.send({ type: "ServerBrowserMessage", msg: { type: "ServerLobbiesResponse", clientId: client.playerInfo.id, lobbies } });
+        });
+    }
+
+    public movePlayerToLobby(client: WebSocketClient, lobbyId: number) {
+        let lobby: LobbyInfo | undefined = this.lobbyMap.get(lobbyId);
+        if (lobby) {
+            lobby.players.push(client.playerInfo);
+            client.send({ type: "ServerBrowserMessage", msg: { type: "ServerEnterLobbyResponse", lobby } });
+        }
+    }
+
+    public createLobby(client: WebSocketClient): number {
+        let newId: number = getNextId();
+        let lobbyInfo: LobbyInfo = { id: newId, name: client.playerInfo.name + "'s Game", players: [] };
+        this.lobbyMap.set(newId, lobbyInfo);
+        return newId;
+    }
+
+    public playerLeaveLobby(client: WebSocketClient, lobbyId: number) {
+        let lobby: LobbyInfo | undefined = this.lobbyMap.get(lobbyId);
+        if (lobby) {
+            lobby.players = lobby.players.filter((player) => player.id != client.playerInfo.id);
+
+            if (lobby.players.length == 0) {
+                this.lobbyMap.delete(lobbyId);
+            }
+
+            this.server.browserHandler.sendLobbyListToAllClients();
+        }
+    }
+
+    public clearPlayerFromLobbies(client: WebSocketClient) {
+        this.lobbyMap.forEach((lobby) => {
+            let index: number = lobby.players.findIndex((player) => player.id == client.playerInfo.id);
+            if (index != -1) {
+                this.playerLeaveLobby(client, lobby.id);
+            }
+        });
     }
 }

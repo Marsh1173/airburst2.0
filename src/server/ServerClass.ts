@@ -37,8 +37,9 @@ export class ServerClass {
         console.log("Connected to " + playerInfo.id);
     }
 
-    public onCloseConnection(id: number) {
-        this.clientMap.delete(id);
-        console.log("Disconnecting from " + id);
+    public onCloseConnection(client: WebSocketClient) {
+        this.browserHandler.clearPlayerFromLobbies(client);
+        this.clientMap.delete(client.playerInfo.id);
+        console.log("Disconnecting from " + client.playerInfo.id);
     }
 }

@@ -10,7 +10,7 @@ export class WebSocketClient {
         });
 
         ws.onclose = () => {
-            this.server.onCloseConnection(this.playerInfo.id);
+            this.server.onCloseConnection(this);
         };
     }
 
@@ -31,10 +31,31 @@ export class WebSocketClient {
     private onReceiveBrowserMessage(msg: ClientBrowserMessage) {
         switch (msg.msg.type) {
             case "ClientRequestLobbies":
-                this.server.browserHandler.sendLobbyList(this);
+                this.server.browserHandler.sendLobbyListToClient(this);
+                break;
+            case "ClientCreateGame":
+                this.updatePlayerInfo(msg.msg.clientInfo);
+                let lobbyId: number = this.server.browserHandler.createLobby(this);
+                this.server.browserHandler.movePlayerToLobby(this, lobbyId);
+                this.server.browserHandler.sendLobbyListToAllClients();
+                break;
+            case "ClientEnterGame":
+                this.updatePlayerInfo(msg.msg.clientInfo);
+                this.server.browserHandler.movePlayerToLobby(this, msg.msg.lobbyId);
+                this.server.browserHandler.sendLobbyListToAllClients();
+                break;
+            case "ClientLeaveLobby":
+                this.updatePlayerInfo(msg.msg.clientInfo);
+                this.server.browserHandler.playerLeaveLobby(this, msg.msg.lobbyId);
                 break;
             default:
                 throw new Error("unknown client message type: " + msg);
         }
+    }
+
+    private updatePlayerInfo(playerInfo: PlayerInfo) {
+        this.playerInfo.color = playerInfo.color;
+        this.playerInfo.name = playerInfo.name;
+        this.playerInfo.id = playerInfo.id;
     }
 }

@@ -19,8 +19,8 @@ export class ServerTalker {
             HomePresenter.showMessage("Websocket connection error  - try refreshing.", "bad");
         };
         this.wss.onopen = () => {
-            console.log("Websocket connection succeeded");
-            HomePresenter.showMessage("Connection succeeded!", "good");
+            console.log("Websocket connection success");
+            HomePresenter.showMessage("Connection success!", "good", 2);
             HomePresenter.onWebSocketConnect();
         };
         this.wss.onclose = () => {
@@ -35,6 +35,7 @@ export class ServerTalker {
 
     public close() {
         this.wss.close();
+        Global.serverInfo.serverTalker = undefined;
     }
 
     public setMessageHandler(messageHandler: MessageHandlerClass) {

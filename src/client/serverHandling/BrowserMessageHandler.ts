@@ -13,9 +13,11 @@ export class BrowserMessageHandler extends MessageHandlerClass {
                 Global.playerInfo.id = data.msg.clientId;
                 BrowserPresenter.updateLobbies(data.msg.lobbies);
                 break;
+            case "ServerEnterLobbyResponse":
+                BrowserPresenter.joinLobby(data.msg.lobby);
+                break;
+            default:
                 throw new Error("unknown client message type: " + data);
         }
-        console.log(data);
-        //do nothing
     }
 }

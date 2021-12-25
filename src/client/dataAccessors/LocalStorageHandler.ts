@@ -6,9 +6,15 @@ export class LocalStorageHandler {
         if (name != null) {
             Global.playerInfo.name = name;
         }
+
+        let color: string | null = localStorage.getItem("color");
+        if (color != null) {
+            Global.playerInfo.color = color;
+        }
     }
 
-    public static setName(name: string) {
+    public static savePlayerInfo(name: string, color: string) {
         localStorage.setItem("name", name);
+        localStorage.setItem("color", color);
     }
 }

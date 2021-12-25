@@ -25,7 +25,7 @@ export class BrowserScreen extends Component<{}, BrowserState> {
                     {elems.length == 0 && <p>- No lobbies are open - </p>}
                     {elems}
                 </div>
-                <SpecialButton title="+ Game" onClick={() => {}} scale={1}></SpecialButton>
+                <SpecialButton title="+ Game" onClick={BrowserPresenter.attemptCreateNewLobby} scale={1}></SpecialButton>
             </div>
         );
     }

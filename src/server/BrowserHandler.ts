@@ -17,14 +17,16 @@ export class BrowserHandler {
         client.send({ type: "ServerBrowserMessage", msg: { type: "ServerLobbiesResponse", clientId: client.playerInfo.id, lobbies } });
     }
 
-    public sendLobbyListToAllClients() {
+    public sendLobbyListToAllClients(exceptionId?: number) {
         let lobbies: LobbyInfo[] = [];
         this.lobbyMap.forEach((lobby) => {
             lobbies.push(lobby);
         });
 
         this.server.clientMap.forEach((client) => {
-            client.send({ type: "ServerBrowserMessage", msg: { type: "ServerLobbiesResponse", clientId: client.playerInfo.id, lobbies } });
+            if (!exceptionId || exceptionId != client.playerInfo.id) {
+                client.send({ type: "ServerBrowserMessage", msg: { type: "ServerLobbiesResponse", clientId: client.playerInfo.id, lobbies } });
+            }
         });
     }
 

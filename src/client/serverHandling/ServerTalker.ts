@@ -1,4 +1,4 @@
-import { ClientMessage } from "../../model/api/messages";
+import { ClientMessage, ServerMessage } from "../../model/api/messages";
 import { Global } from "../dataAccessors/GlobalInfo";
 import { HomePresenter } from "../presenter/HomePresenter";
 import { MessageHandlerClass } from "./MessageHandlerClass";
@@ -9,7 +9,7 @@ export class ServerTalker {
     constructor(private messageHandler: MessageHandlerClass) {
         this.wss = new WebSocket(Global.serverInfo.url);
 
-        this.wss.onmessage = (msg: MessageEvent) => {
+        this.wss.onmessage = (msg: MessageEvent<string>) => {
             this.messageHandler.receiveMessage(JSON.parse(msg.data));
         };
 
@@ -25,12 +25,13 @@ export class ServerTalker {
         };
         this.wss.onclose = () => {
             console.log("Websocket connection closed");
+            Global.serverInfo.serverTalker = undefined;
             HomePresenter.showMessage("Connection closed - try refreshing.", "bad");
         };
     }
 
-    public sendMessage(msg: ClientMessage) {
-        this.wss.send(JSON.stringify(msg));
+    public sendMessage(data: ClientMessage) {
+        this.wss.send(JSON.stringify(data));
     }
 
     public close() {

@@ -7,9 +7,7 @@ export class BrowserPresenter {
     public static currentLobbies: LobbyInfo[] = [];
     public static currentLobby: LobbyInfo = { id: -2, name: "", players: [] };
     public static updateLobbies: (lobbies: LobbyInfo[]) => void = (lobbies: LobbyInfo[]) => {
-        BrowserPresenter.updateLobbies = (lobbies: LobbyInfo[]) => {
-            BrowserPresenter.currentLobbies = lobbies;
-        };
+        BrowserPresenter.currentLobbies = lobbies;
     };
     public static resetUpdateLobbyFunc() {
         BrowserPresenter.updateLobbies = (lobbies: LobbyInfo[]) => {
@@ -52,6 +50,12 @@ export class BrowserPresenter {
     }
     public static joinLobby(lobbyInfo: LobbyInfo) {
         BrowserPresenter.currentLobby = lobbyInfo;
+        let lobbyIndex: number = BrowserPresenter.currentLobbies.findIndex((lobby) => lobby.id == lobbyInfo.id);
+        if (lobbyIndex == -1) {
+            BrowserPresenter.currentLobbies.push(lobbyInfo);
+        } else {
+            BrowserPresenter.currentLobbies[lobbyIndex] = lobbyInfo;
+        }
         HomePresenter.changeHomeScreen("lobby");
     }
 }

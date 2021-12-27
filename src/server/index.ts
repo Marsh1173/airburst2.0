@@ -1,5 +1,4 @@
 const express = require("express");
-import { WebSocket } from "ws";
 import * as path from "path";
 import { Application } from "express-ws";
 import * as https from "https";

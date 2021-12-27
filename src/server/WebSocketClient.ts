@@ -14,8 +14,13 @@ export class WebSocketClient {
         };
     }
 
-    public send(data: ServerMessage) {
-        this.ws.send(JSON.stringify(data));
+    public async send(data: ServerMessage) {
+        if (this.ws.readyState === this.ws.OPEN) {
+            let jsonData: string = JSON.stringify(data);
+            this.ws.send(jsonData);
+        } else {
+            console.log("Tried to send to a closed websocket");
+        }
     }
 
     private onReceiveMessage(msg: ClientMessage) {
@@ -37,12 +42,12 @@ export class WebSocketClient {
                 this.updatePlayerInfo(msg.msg.clientInfo);
                 let lobbyId: number = this.server.browserHandler.createLobby(this);
                 this.server.browserHandler.movePlayerToLobby(this, lobbyId);
-                this.server.browserHandler.sendLobbyListToAllClients();
+                this.server.browserHandler.sendLobbyListToAllClients(msg.msg.clientInfo.id);
                 break;
             case "ClientEnterGame":
                 this.updatePlayerInfo(msg.msg.clientInfo);
                 this.server.browserHandler.movePlayerToLobby(this, msg.msg.lobbyId);
-                this.server.browserHandler.sendLobbyListToAllClients();
+                this.server.browserHandler.sendLobbyListToAllClients(msg.msg.clientInfo.id);
                 break;
             case "ClientLeaveLobby":
                 this.updatePlayerInfo(msg.msg.clientInfo);

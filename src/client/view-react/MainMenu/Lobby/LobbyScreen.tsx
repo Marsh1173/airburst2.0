@@ -34,7 +34,7 @@ export class LobbyScreen extends Component<{}, LobbyState> {
     componentDidMount() {
         BrowserPresenter.updateLobbies = (lobbies: LobbyInfo[]) => {
             BrowserPresenter.currentLobbies = lobbies;
-            let lobby: LobbyInfo | undefined = lobbies.find((lobby) => (lobby.id = this.state.lobby.id));
+            let lobby: LobbyInfo | undefined = lobbies.find((lobby) => lobby.id == this.state.lobby.id);
             if (lobby) {
                 BrowserPresenter.currentLobby = lobby;
                 this.setState({ lobby });

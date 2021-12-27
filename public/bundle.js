@@ -320,16 +320,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
-/***/ "./src/client/localMain.tsx":
-/*!**********************************!*\
-  !*** ./src/client/localMain.tsx ***!
-  \**********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\n/* harmony import */ var _dataAccessors_LocalStorageHandler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dataAccessors/LocalStorageHandler */ \"./src/client/dataAccessors/LocalStorageHandler.ts\");\n/* harmony import */ var _view_react_Home__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./view-react/Home */ \"./src/client/view-react/Home.tsx\");\n\r\n\r\n\r\n\r\nclass MainDiv extends react__WEBPACK_IMPORTED_MODULE_0__.Component {\r\n    render() {\r\n        return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_view_react_Home__WEBPACK_IMPORTED_MODULE_3__.Home, null);\r\n    }\r\n}\r\n_dataAccessors_LocalStorageHandler__WEBPACK_IMPORTED_MODULE_2__.LocalStorageHandler.initLocalStorage();\r\nconst domContainer = document.querySelector(\"#reactDom\");\r\n// setTimeout(() => {\r\n//     ReactDOM.render(createElement(MainDiv), domContainer);\r\n// }, 1000);\r\nreact_dom__WEBPACK_IMPORTED_MODULE_1__.render((0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(MainDiv), domContainer);\r\n\n\n//# sourceURL=webpack://general-interface/./src/client/localMain.tsx?");
-
-/***/ }),
-
 /***/ "./src/client/presenter/BrowserPresenter.ts":
 /*!**************************************************!*\
   !*** ./src/client/presenter/BrowserPresenter.ts ***!
@@ -347,6 +337,16 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"HomePresenter\": () => (/* binding */ HomePresenter)\n/* harmony export */ });\n/* harmony import */ var _dataAccessors_GlobalInfo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../dataAccessors/GlobalInfo */ \"./src/client/dataAccessors/GlobalInfo.ts\");\n/* harmony import */ var _dataAccessors_LocalStorageHandler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../dataAccessors/LocalStorageHandler */ \"./src/client/dataAccessors/LocalStorageHandler.ts\");\n/* harmony import */ var _serverHandling_BrowserMessageHandler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../serverHandling/BrowserMessageHandler */ \"./src/client/serverHandling/BrowserMessageHandler.ts\");\n/* harmony import */ var _serverHandling_ServerTalker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../serverHandling/ServerTalker */ \"./src/client/serverHandling/ServerTalker.ts\");\n\r\n\r\n\r\n\r\nclass HomePresenter {\r\n    static initWebsocket() {\r\n        _dataAccessors_GlobalInfo__WEBPACK_IMPORTED_MODULE_0__.Global.serverInfo.serverTalker = new _serverHandling_ServerTalker__WEBPACK_IMPORTED_MODULE_3__.ServerTalker(new _serverHandling_BrowserMessageHandler__WEBPACK_IMPORTED_MODULE_2__.BrowserMessageHandler());\r\n    }\r\n    static onWebSocketConnect() {\r\n        HomePresenter.changeHomeScreen(\"login\");\r\n    }\r\n    static onLogin(name, color) {\r\n        _dataAccessors_LocalStorageHandler__WEBPACK_IMPORTED_MODULE_1__.LocalStorageHandler.savePlayerInfo(name, color);\r\n        _dataAccessors_GlobalInfo__WEBPACK_IMPORTED_MODULE_0__.Global.playerInfo.color = color;\r\n        _dataAccessors_GlobalInfo__WEBPACK_IMPORTED_MODULE_0__.Global.playerInfo.name = name;\r\n        if (_dataAccessors_GlobalInfo__WEBPACK_IMPORTED_MODULE_0__.Global.serverInfo.serverTalker) {\r\n            _dataAccessors_GlobalInfo__WEBPACK_IMPORTED_MODULE_0__.Global.serverInfo.serverTalker.sendMessage({\r\n                clientId: _dataAccessors_GlobalInfo__WEBPACK_IMPORTED_MODULE_0__.Global.playerInfo.id,\r\n                msg: { type: \"ClientBrowserMessage\", msg: { type: \"ClientRequestLobbies\" } },\r\n            });\r\n        }\r\n        HomePresenter.changeHomeScreen(\"browser\");\r\n    }\r\n}\r\nHomePresenter.changeHomeScreen = () => { };\r\nHomePresenter.showMessage = () => { };\r\n\n\n//# sourceURL=webpack://general-interface/./src/client/presenter/HomePresenter.ts?");
+
+/***/ }),
+
+/***/ "./src/client/remoteMain.tsx":
+/*!***********************************!*\
+  !*** ./src/client/remoteMain.tsx ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\n/* harmony import */ var _dataAccessors_GlobalInfo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dataAccessors/GlobalInfo */ \"./src/client/dataAccessors/GlobalInfo.ts\");\n/* harmony import */ var _dataAccessors_LocalStorageHandler__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dataAccessors/LocalStorageHandler */ \"./src/client/dataAccessors/LocalStorageHandler.ts\");\n/* harmony import */ var _view_react_Home__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./view-react/Home */ \"./src/client/view-react/Home.tsx\");\n\r\n\r\n\r\n\r\n\r\nclass MainDiv extends react__WEBPACK_IMPORTED_MODULE_0__.Component {\r\n    render() {\r\n        return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_view_react_Home__WEBPACK_IMPORTED_MODULE_4__.Home, null);\r\n    }\r\n}\r\n_dataAccessors_LocalStorageHandler__WEBPACK_IMPORTED_MODULE_3__.LocalStorageHandler.initLocalStorage();\r\n_dataAccessors_GlobalInfo__WEBPACK_IMPORTED_MODULE_2__.Global.serverInfo.url = `wss://${location.host}:3000`;\r\nconst domContainer = document.querySelector(\"#reactDom\");\r\nreact_dom__WEBPACK_IMPORTED_MODULE_1__.render((0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(MainDiv), domContainer);\r\n\n\n//# sourceURL=webpack://general-interface/./src/client/remoteMain.tsx?");
 
 /***/ }),
 
@@ -562,7 +562,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/client/localMain.tsx");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/client/remoteMain.tsx");
 /******/ 	
 /******/ })()
 ;

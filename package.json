@@ -33,7 +33,7 @@
     "scripts": {
         "watch": "yarn && npx webpack --watch --config webpack.config.js",
         "build": "npx webpack --config prod.config.js",
-        "prod-server": "ts-node-dev ./src/server/index.ts",
+        "prod-server": "npx ts-node ./src/server/index.ts",
         "dev-server": "ts-node-dev ./src/server/index.ts dev"
     }
 }

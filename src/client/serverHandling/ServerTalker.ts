@@ -20,7 +20,7 @@ export class ServerTalker {
         };
         this.wss.onopen = () => {
             console.log("Websocket connection success");
-            HomePresenter.showMessage("Connection success!", "good", 2);
+            HomePresenter.showMessage("Connection success!", "good", 1);
             HomePresenter.onWebSocketConnect();
         };
         this.wss.onclose = () => {

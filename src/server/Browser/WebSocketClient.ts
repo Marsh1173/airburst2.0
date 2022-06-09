@@ -1,7 +1,7 @@
 import WebSocket from "ws";
-import { ClientBrowserMessage, ClientMessage, ServerMessage } from "../model/api/messages";
-import { PlayerInfo } from "../model/api/PlayerInfo";
-import { ServerClass } from "./ServerClass";
+import { ClientBrowserMessage, ClientMessage, ServerMessage } from "../../model/api/messages";
+import { PlayerInfo } from "../../model/api/PlayerInfo";
+import { ServerClass } from "../ServerClass";
 
 export class WebSocketClient {
     constructor(private readonly ws: WebSocket, private readonly server: ServerClass, public readonly playerInfo: PlayerInfo) {
@@ -16,8 +16,7 @@ export class WebSocketClient {
 
     public async send(data: ServerMessage) {
         if (this.ws.readyState === this.ws.OPEN) {
-            let jsonData: string = JSON.stringify(data);
-            this.ws.send(jsonData);
+            this.ws.send(JSON.stringify(data));
         } else {
             console.log("Tried to send to a closed websocket");
         }
@@ -29,7 +28,7 @@ export class WebSocketClient {
                 this.onReceiveBrowserMessage(msg.msg);
                 break;
             default:
-                throw new Error("unknown client message type: " + msg);
+                console.log("UNKNOWN CLIENT MESSAGE TYPE: " + msg);
         }
     }
 
@@ -38,13 +37,13 @@ export class WebSocketClient {
             case "ClientRequestLobbies":
                 this.server.browserHandler.sendLobbyListToClient(this);
                 break;
-            case "ClientCreateGame":
+            case "ClientCreateLobby":
                 this.updatePlayerInfo(msg.msg.clientInfo);
                 let lobbyId: number = this.server.browserHandler.createLobby(this);
                 this.server.browserHandler.movePlayerToLobby(this, lobbyId);
                 this.server.browserHandler.sendLobbyListToAllClients(msg.msg.clientInfo.id);
                 break;
-            case "ClientEnterGame":
+            case "ClientEnterLobby":
                 this.updatePlayerInfo(msg.msg.clientInfo);
                 this.server.browserHandler.movePlayerToLobby(this, msg.msg.lobbyId);
                 this.server.browserHandler.sendLobbyListToAllClients(msg.msg.clientInfo.id);
@@ -52,6 +51,10 @@ export class WebSocketClient {
             case "ClientLeaveLobby":
                 this.updatePlayerInfo(msg.msg.clientInfo);
                 this.server.browserHandler.playerLeaveLobby(this, msg.msg.lobbyId);
+                break;
+            case "ClientStartGame":
+                this.server.browserHandler.startGame(msg.msg.lobbyId, msg.msg.playerId);
+                this.server.browserHandler.sendLobbyListToAllClients();
                 break;
             default:
                 throw new Error("unknown client message type: " + msg);

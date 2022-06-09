@@ -1,6 +1,7 @@
 import { ServerBrowserMessage } from "../../model/api/messages";
 import { Global } from "../dataAccessors/GlobalInfo";
 import { BrowserPresenter } from "../presenter/BrowserPresenter";
+import { HomePresenter } from "../presenter/HomePresenter";
 import { MessageHandlerClass } from "./MessageHandlerClass";
 
 export class BrowserMessageHandler extends MessageHandlerClass {
@@ -15,6 +16,9 @@ export class BrowserMessageHandler extends MessageHandlerClass {
                 break;
             case "ServerEnterLobbyResponse":
                 BrowserPresenter.joinLobby(data.msg.lobby);
+                break;
+            case "ServerGameStart":
+                HomePresenter.startGame(data.msg.gameInfo);
                 break;
             default:
                 throw new Error("unknown client message type: " + data);

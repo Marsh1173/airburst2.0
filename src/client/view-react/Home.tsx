@@ -8,6 +8,7 @@ import { MessageComponent } from "./Extras/MessageComponent/MessageComponent";
 import { LoginScreen } from "./MainMenu/Login/LoginScreen";
 import "./HomeStyles.less";
 import { LobbyScreen } from "./MainMenu/Lobby/LobbyScreen";
+import { GameScreen } from "./Game/GameScreen";
 
 export class Home extends Component<{}, HomeState> {
     private msgRef: React.RefObject<MessageComponent> = React.createRef();
@@ -25,6 +26,7 @@ export class Home extends Component<{}, HomeState> {
                 {this.state.currentPage == "login" && <LoginScreen></LoginScreen>}
                 {this.state.currentPage == "browser" && <BrowserScreen></BrowserScreen>}
                 {this.state.currentPage == "lobby" && <LobbyScreen></LobbyScreen>}
+                {this.state.currentPage == "game" && <GameScreen></GameScreen>}
                 <MessageComponent ref={this.msgRef}></MessageComponent>
             </div>
         );

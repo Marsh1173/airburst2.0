@@ -1,28 +1,39 @@
 import { PlayerInfo } from "./PlayerInfo";
 import { LobbyInfo } from "./LobbyInfo";
+import { GameInfo } from "./GameInfo";
+import { ServerGameMessage } from "../../server/ServerGame/ServerGame";
 
 export interface ClientMessage {
-    msg: ClientBrowserMessage;
+    msg: ClientBrowserMessage | ClientGameMessage;
     clientId: number;
+}
+
+export interface ClientGameMessage {
+    type: "ClientGameMessage";
+    msg: ClientPressKey;
+}
+export interface ClientPressKey {
+    type: "ClientPressKey";
+    key: string;
 }
 
 export interface ClientBrowserMessage {
     type: "ClientBrowserMessage";
-    msg: ClientRequestLobbies | ClientEnterGame | ClientCreateGame | ClientLeaveLobby;
+    msg: ClientRequestLobbies | ClientEnterLobby | ClientCreateLobby | ClientLeaveLobby | ClientStartGame;
 }
 
 export interface ClientRequestLobbies {
     type: "ClientRequestLobbies";
 }
 
-export interface ClientEnterGame {
-    type: "ClientEnterGame";
+export interface ClientEnterLobby {
+    type: "ClientEnterLobby";
     clientInfo: PlayerInfo;
     lobbyId: number;
 }
 
-export interface ClientCreateGame {
-    type: "ClientCreateGame";
+export interface ClientCreateLobby {
+    type: "ClientCreateLobby";
     clientInfo: PlayerInfo;
 }
 
@@ -32,7 +43,13 @@ export interface ClientLeaveLobby {
     lobbyId: number;
 }
 
-export type ServerMessage = ServerErrorMessage | ServerBrowserMessage;
+export interface ClientStartGame {
+    type: "ClientStartGame";
+    lobbyId: number;
+    playerId: number;
+}
+
+export type ServerMessage = ServerErrorMessage | ServerBrowserMessage | ServerGameMessage;
 
 export interface ServerErrorMessage {
     type: "ServerErrorMessage";
@@ -40,7 +57,7 @@ export interface ServerErrorMessage {
 }
 export interface ServerBrowserMessage {
     type: "ServerBrowserMessage";
-    msg: ServerLobbiesResponse | ServerEnterLobbyResponse;
+    msg: ServerLobbiesResponse | ServerEnterLobbyResponse | ServerGameStart;
 }
 export interface ServerLobbiesResponse {
     type: "ServerLobbiesResponse";
@@ -51,8 +68,7 @@ export interface ServerEnterLobbyResponse {
     type: "ServerEnterLobbyResponse";
     lobby: LobbyInfo;
 }
-
-// export interface ServerLobbyMessage {
-//     type: "ServerLobbyMessage";
-//     msg: ;
-// }
+export interface ServerGameStart {
+    type: "ServerGameStart";
+    gameInfo: GameInfo;
+}

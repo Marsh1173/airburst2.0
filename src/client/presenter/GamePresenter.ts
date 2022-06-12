@@ -11,8 +11,13 @@ export class GamePresenter {
 
   public static onFinishRendering() {
     if (Global.serverInfo.serverTalker && !GamePresenter.game && this.gameScreenInterface) {
-      GamePresenter.game = new ClientGame(GamePresenter.initialGameInfo, this.gameScreenInterface.canvas);
-      Global.serverInfo.serverTalker.setMessageHandler(new GameMessageHandler(GamePresenter.game));
+      let newGameMessageHandler: GameMessageHandler = new GameMessageHandler();
+      Global.serverInfo.serverTalker.setMessageHandler(newGameMessageHandler);
+      GamePresenter.game = new ClientGame(
+        newGameMessageHandler,
+        GamePresenter.initialGameInfo,
+        this.gameScreenInterface.canvas
+      );
       Looper.addUpdateable(GamePresenter.game);
     }
   }

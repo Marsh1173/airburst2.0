@@ -6,7 +6,7 @@ import { PLAYER_CONFIG } from "./PlayerConfig";
 export type PlayerAction = "rotateCounterClockwise" | "rotateClockwise";
 
 export abstract class Player implements Updateable {
-  public readonly momentum: Vector = { x: 3, y: 0 };
+  public readonly momentum: Vector = { x: -3, y: 0 };
   public readonly balloons: boolean[][] = [];
   public readonly paddlehandler: PlayerPaddleHandler;
 
@@ -18,6 +18,7 @@ export abstract class Player implements Updateable {
   constructor(
     public readonly id: number,
     public readonly name: string,
+    public readonly color: string,
     public readonly position: Vector,
     rotation: number
   ) {

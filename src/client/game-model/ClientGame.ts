@@ -13,8 +13,8 @@ export class ClientGame extends Game {
   public readonly renderHandler: RenderHandler;
   // public readonly particleHandler: ParticleHandler
 
-  public readonly players: ClientPlayer[] = [];
-  public readonly balls: ClientBall[] = [];
+  public readonly players: Map<number, ClientPlayer>;
+  public readonly balls: Map<number, ClientBall>;
   public mainPlayer: ClientPlayer | undefined = undefined;
 
   constructor(private readonly messageHandler: GameMessageHandler, gameInfo: GameInfo, canvas: HTMLCanvasElement) {
@@ -28,26 +28,30 @@ export class ClientGame extends Game {
     this.setMainPlayerKeyBoardListeners();
   }
 
-  private getClientPlayersFromGameInfo(players: GamePlayerInfo[]): ClientPlayer[] {
-    return players.map((player) => {
+  private getClientPlayersFromGameInfo(players: GamePlayerInfo[]): Map<number, ClientPlayer> {
+    let client_map: Map<number, ClientPlayer> = new Map<number, ClientPlayer>();
+    players.forEach((player) => {
       let newPlayer: ClientPlayer = new ClientPlayer(player.id, player.name, player.color, player.pos, player.rotation);
       if (Global.playerInfo.id == player.id) {
         this.messageHandler.setLocalPlayerAPI(newPlayer);
         this.mainPlayer = newPlayer;
-        return newPlayer;
+        client_map.set(player.id, newPlayer);
       } else {
         this.messageHandler.setRemotePlayerAPI(newPlayer);
-        return newPlayer;
+        client_map.set(player.id, newPlayer);
       }
     });
+    return client_map;
   }
 
-  private getClientBallsFromGameInfo(balls: BallInfo[]): ClientBall[] {
-    return balls.map((ball) => {
+  private getClientBallsFromGameInfo(balls: BallInfo[]): Map<number, ClientBall> {
+    let ball_map: Map<number, ClientBall> = new Map<number, ClientBall>();
+    balls.forEach((ball) => {
       let newBall: ClientBall = new ClientBall(ball.id, ball.mom, ball.pos);
       this.messageHandler.setBallAPI(newBall);
-      return newBall;
+      ball_map.set(ball.id, newBall);
     });
+    return ball_map;
   }
 
   public update(elapsedTime: number): void {

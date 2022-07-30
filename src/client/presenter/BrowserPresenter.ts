@@ -63,6 +63,7 @@ export class BrowserPresenter {
     HomePresenter.changeHomeScreen("lobby");
   }
   public static attemptStartGame() {
+    HomePresenter.showMessage("Games have not been implemented yet.", "neutral");
     if (Global.serverInfo.serverTalker) {
       Global.serverInfo.serverTalker.sendMessage({
         clientId: Global.playerInfo.id,

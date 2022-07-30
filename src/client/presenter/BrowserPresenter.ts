@@ -64,16 +64,16 @@ export class BrowserPresenter {
   }
   public static attemptStartGame() {
     HomePresenter.showMessage("Games have not been implemented yet.", "neutral");
-    if (Global.serverInfo.serverTalker) {
-      Global.serverInfo.serverTalker.sendMessage({
-        clientId: Global.playerInfo.id,
-        msg: {
-          type: "ClientBrowserMessage",
-          msg: { type: "ClientStartGame", lobbyId: BrowserPresenter.currentLobby.id, playerId: Global.playerInfo.id },
-        },
-      });
-    } else {
-      HomePresenter.showMessage("Connection error.", "bad");
-    }
+    // if (Global.serverInfo.serverTalker) {
+    //   Global.serverInfo.serverTalker.sendMessage({
+    //     clientId: Global.playerInfo.id,
+    //     msg: {
+    //       type: "ClientBrowserMessage",
+    //       msg: { type: "ClientStartGame", lobbyId: BrowserPresenter.currentLobby.id, playerId: Global.playerInfo.id },
+    //     },
+    //   });
+    // } else {
+    //   HomePresenter.showMessage("Connection error.", "bad");
+    // }
   }
 }
